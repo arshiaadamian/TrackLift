@@ -24,4 +24,37 @@ const mongoStore = MongoStore.create({
 });
 
 
+// using database connection
 var {database} = require('./databaseConnection.js');
+// accessing the users collection in the database
+const userCollection = database.db(mongodb_database).collection("users");
+
+// middleware to have access to all files in /public with no further routing needed
+app.use(express.static('/public'));
+// middleware to parse HTML elements into request body
+app.use(express.urlencoded({extended: false}));
+
+
+// middleware to store sessiions in mongoDB instead of memory
+app.use(session({
+    secret: node_session_secret,
+    store: mongoStore,
+    resave: true,
+    saveUninitialized: false,
+}));
+
+
+
+
+// creating a user under the user collection for testing purposes
+userCollection.insertOne({
+    name: "Arshia",
+    email: "arshiaadamian@gmail.com"
+}) 
+
+
+// run server
+app.listen(port, function(){
+    console.log("app is live on " + port);
+})
+
