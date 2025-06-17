@@ -5,7 +5,9 @@
   "type": "commonjs",
   "scripts": {
     "start": "nodemon app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run start\" \"npm run client\""
   },
   "repository": {
     "type": "git",
@@ -21,11 +23,15 @@
   "description": "",
   "dependencies": {
     "bcrypt": "^6.0.0",
+    "bootstrap": "^5.3.6",
     "connect-mongo": "^5.1.0",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "express-session": "^1.18.1",
     "mongodb": "^6.17.0",
     "nodemon": "^3.1.10"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
   }
 }
