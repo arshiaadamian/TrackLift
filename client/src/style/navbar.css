@@ -1,0 +1,93 @@
+#navbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #ffffff;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+#navbar nav {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+#navbar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+#navbar li {
+  flex: 1;
+  text-align: center;
+}
+
+#navbar a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 0;
+  text-decoration: none;
+  color: #555;
+  font-family: "Arial", sans-serif;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+#navbar a:hover {
+  color: #2c83e6;
+}
+
+#navbar a::before {
+  font-family: "Material Icons";
+  font-size: 24px;
+  margin-bottom: 4px;
+}
+
+/* Icons for each item */
+#navbar li:nth-child(1) a::before {
+  content: "assignment";
+}
+
+#navbar li:nth-child(2) a::before {
+  content: "home";
+}
+
+#navbar li:nth-child(3) a::before {
+  content: "calendar_today";
+}
+
+/* Active state */
+#navbar a.active {
+  color: #2c83e6;
+}
+
+/* Add Material Icons font */
+@font-face {
+  font-family: "Material Icons";
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/materialicons/v140/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2)
+    format("woff2");
+}
+
+.material-icons {
+  font-family: "Material Icons";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+}

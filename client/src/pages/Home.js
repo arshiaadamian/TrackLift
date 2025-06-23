@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Navbar from "../components/navbar";
 
 function Home() {
   const [userName, setUserName] = useState("none");
@@ -15,8 +16,11 @@ function Home() {
   }, []);
   return (
     <div>
-      <h1>Home Page</h1>
-      <h2>{userName !== "none" && userName}</h2>
+      <div>
+        <h1>Home Page</h1>
+        <h2>{userName !== "none" && userName}</h2>
+      </div>
+      {<Navbar />}
     </div>
   );
 }

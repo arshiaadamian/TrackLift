@@ -69,5 +69,5 @@ app.use("/", signinFunction(userCollection));
 
 // run server
 app.listen(port, function () {
-  console.log("app is live on " + port);
+  console.log("app is live on http://localhost:" + port);
 });
