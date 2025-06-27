@@ -16,7 +16,7 @@ const addWorkoutFunction = (userCollection) => {
     console.log("username is " + req.session.username);
 
     // insert the workout into the user's workouts array
-    const update = { workoutName: workoutName, workoutSets: workoutSets };
+    const update = { workoutName, workoutSets };
 
     await userCollection.updateOne(
       { userName: req.session.username },

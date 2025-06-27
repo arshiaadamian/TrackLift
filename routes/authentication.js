@@ -30,13 +30,13 @@ const signupFunction = (userCollection) => {
     await userCollection.insertOne({
       username: username,
       password: hashedPassword,
-      Monday: { workoutName: "", workoutSets: "" },
-      Tuesday: { workoutName: "", workoutSets: "" },
-      Wednesday: { workoutName: "", workoutSets: "" },
-      Thursday: { workoutName: "", workoutSets: "" },
-      Friday: { workoutName: "", workoutSets: "" },
-      Saturday: { workoutName: "", workoutSets: "" },
-      Sunday: { workoutName: "", workoutSets: "" },
+      Monday: [],
+      Tuesday: [],
+      Wednesday: [],
+      Thursday: [],
+      Friday: [],
+      Saturday: [],
+      Sunday: [],
     });
 
     console.log("user created successfully");
