@@ -30,6 +30,13 @@ const signupFunction = (userCollection) => {
     await userCollection.insertOne({
       username: username,
       password: hashedPassword,
+      Monday: { workoutName: "", workoutSets: "" },
+      Tuesday: { workoutName: "", workoutSets: "" },
+      Wednesday: { workoutName: "", workoutSets: "" },
+      Thursday: { workoutName: "", workoutSets: "" },
+      Friday: { workoutName: "", workoutSets: "" },
+      Saturday: { workoutName: "", workoutSets: "" },
+      Sunday: { workoutName: "", workoutSets: "" },
     });
 
     console.log("user created successfully");
@@ -48,7 +55,6 @@ const signupFunction = (userCollection) => {
 
 // post login
 const signinFunction = (userCollection) => {
-  console.log("signin function called");
   router.post("/loggingin", async (req, res) => {
     console.log("signin route hit");
     const { username, password } = req.body;

@@ -11,6 +11,8 @@ const {
   signinFunction,
 } = require("./routes/authentication.js");
 
+const addWorkoutFunction = require("./routes/addWorkout.js");
+
 // secret .env information
 const mongodb_host = process.env.MONGODB_HOST;
 const mongodb_user = process.env.MONGODB_USER;
@@ -66,6 +68,9 @@ app.use("/", signupFunction(userCollection));
 
 // middleware for the signin function
 app.use("/", signinFunction(userCollection));
+
+// middleware for the workout page
+app.use("/", addWorkoutFunction(userCollection));
 
 // run server
 app.listen(port, function () {
