@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Navbar from "./navbar";
 
 export default function WorkoutPage() {
   const { day } = useParams();
@@ -39,9 +40,13 @@ export default function WorkoutPage() {
             {workouts && workouts.length > 0 ? (
               <ul>
                 {workouts.map((w, index) => (
-                  <li key={index}>
-                    {w.workoutName} – {w.workoutSets} sets
-                  </li>
+                  <form action="removingWorkout" method="POST" key={index}>
+                    <input style={{ display: "none" }} name="day" value={day} />
+                    <li key={index}>
+                      {w.workoutName} – {w.workoutSets} sets
+                      <button>Remove</button>
+                    </li>
+                  </form>
                 ))}
               </ul>
             ) : (
@@ -50,6 +55,7 @@ export default function WorkoutPage() {
           </div>
         </form>
       </div>
+      <Navbar />
     </div>
   );
 }
