@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import Navbar from "./navbar";
+import "../style/workoutPage.css";
 
 export default function WorkoutPage() {
   const { day } = useParams();
@@ -15,8 +16,26 @@ export default function WorkoutPage() {
       })
       .catch((err) => console.error("Error fetching workouts:", err));
   }, [day]);
+
+  // handling empty input fields
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const error = params.get("error");
+
   return (
     <div>
+      {/* This form is used to remove a workout from the list. */}
+      <form
+        style={{ display: "none" }}
+        action="/workoutPage/removingWorkout"
+        method="POST"
+        id="removeWorkout"
+      >
+        <input type="hidden" name="day" value={day} />
+        <input type="hidden" name="index" id="removeIndex" />
+      </form>
+      {/* end of the form to remove a workout from the list. */}
+
       <h1>{day || "unknown day, error"}</h1>
       <div className="add">
         <form action="addWorkout" method="POST">
@@ -34,19 +53,26 @@ export default function WorkoutPage() {
           ></input>
           <input style={{ display: "none" }} name="day" value={day} />
           <button type="submit">Add workout</button>
-
+          {error === "missing_fields" && (
+            <p style={{ color: "red" }}>Please fill in all the boxes.</p>
+          )}
           <div className="workouts">
             <h2>Workouts for {day}</h2>
             {workouts && workouts.length > 0 ? (
               <ul>
                 {workouts.map((w, index) => (
-                  <form action="removingWorkout" method="POST" key={index}>
-                    <input style={{ display: "none" }} name="day" value={day} />
-                    <li key={index}>
-                      {w.workoutName} – {w.workoutSets} sets
-                      <button>Remove</button>
-                    </li>
-                  </form>
+                  <li key={index}>
+                    {w.workoutName} – {w.workoutSets} sets
+                    <button
+                      type="button"
+                      onClick={() => {
+                        document.getElementById("removeIndex").value = index;
+                        document.getElementById("removeWorkout").submit();
+                      }}
+                    >
+                      Remove
+                    </button>
+                  </li>
                 ))}
               </ul>
             ) : (

@@ -1,0 +1,184 @@
+{
+  "Chest": [
+    {
+      "name": "Barbell Bench Press",
+      "tutorial": "https://www.youtube.com/watch?v=rT7DgCr-3pg"
+    },
+    {
+      "name": "Incline Dumbbell Press",
+      "tutorial": "https://www.youtube.com/watch?v=8iPEnn-ltC8"
+    },
+    {
+      "name": "Cable Chest Fly",
+      "tutorial": "https://www.youtube.com/watch?v=eozdVDA78K0"
+    },
+    {
+      "name": "Push-Ups",
+      "tutorial": "https://www.youtube.com/watch?v=_l3ySVKYVJ8"
+    },
+    {
+      "name": "Decline Bench Press",
+      "tutorial": "https://www.youtube.com/watch?v=YCSm0VwKz4E"
+    },
+    {
+      "name": "Chest Dips",
+      "tutorial": "https://www.youtube.com/watch?v=2z8JmcrW-As"
+    }
+  ],
+  "Triceps": [
+    {
+      "name": "Tricep Dips",
+      "tutorial": "https://www.youtube.com/watch?v=0326dy_-CzM"
+    },
+    {
+      "name": "Skull Crushers",
+      "tutorial": "https://www.youtube.com/watch?v=d_KZxkY_0cM"
+    },
+    {
+      "name": "Triceps Pushdown (Cable)",
+      "tutorial": "https://www.youtube.com/watch?v=2-LAMcpzODU"
+    },
+    {
+      "name": "Overhead Dumbbell Extension",
+      "tutorial": "https://www.youtube.com/watch?v=_gsUck-7M74"
+    },
+    {
+      "name": "Close-Grip Bench Press",
+      "tutorial": "https://www.youtube.com/watch?v=HCA4DwjO4xQ"
+    },
+    {
+      "name": "Diamond Push-Ups",
+      "tutorial": "https://www.youtube.com/watch?v=J0DnG1_S92I"
+    }
+  ],
+  "Biceps": [
+    {
+      "name": "Barbell Curl",
+      "tutorial": "https://www.youtube.com/watch?v=kwG2ipFRgfo"
+    },
+    {
+      "name": "Hammer Curl",
+      "tutorial": "https://www.youtube.com/watch?v=zC3nLlEvin4"
+    },
+    {
+      "name": "Preacher Curl",
+      "tutorial": "https://www.youtube.com/watch?v=0AUGkch3tzc"
+    },
+    {
+      "name": "Concentration Curl",
+      "tutorial": "https://www.youtube.com/watch?v=ul6Z7VvdpH8"
+    },
+    {
+      "name": "Incline Dumbbell Curl",
+      "tutorial": "https://www.youtube.com/watch?v=soxrZlIl35U"
+    },
+    {
+      "name": "Cable Curl",
+      "tutorial": "https://www.youtube.com/watch?v=ykJmrZ5v0Oo"
+    }
+  ],
+  "Legs": [
+    {
+      "name": "Barbell Back Squat",
+      "tutorial": "https://www.youtube.com/watch?v=ultWZbUMPL8"
+    },
+    {
+      "name": "Romanian Deadlift",
+      "tutorial": "https://www.youtube.com/watch?v=2SHsk9AzdjA"
+    },
+    {
+      "name": "Leg Press",
+      "tutorial": "https://www.youtube.com/watch?v=IZxyjW7MPJQ"
+    },
+    {
+      "name": "Walking Lunges",
+      "tutorial": "https://www.youtube.com/watch?v=wrwwXE_x-pQ"
+    },
+    {
+      "name": "Bulgarian Split Squat",
+      "tutorial": "https://www.youtube.com/watch?v=2C-uNgKwPLE"
+    },
+    {
+      "name": "Seated Leg Curl",
+      "tutorial": "https://www.youtube.com/watch?v=JobxUXV9mDs"
+    }
+  ],
+  "Back": [
+    {
+      "name": "Pull-Up",
+      "tutorial": "https://www.youtube.com/watch?v=eGo4IYlbE5g"
+    },
+    {
+      "name": "Barbell Deadlift",
+      "tutorial": "https://www.youtube.com/watch?v=op9kVnSso6Q"
+    },
+    {
+      "name": "Lat Pulldown",
+      "tutorial": "https://www.youtube.com/watch?v=CAwf7n6Luuc"
+    },
+    {
+      "name": "Seated Cable Row",
+      "tutorial": "https://www.youtube.com/watch?v=HJSVR_67OlM"
+    },
+    {
+      "name": "Bent Over Barbell Row",
+      "tutorial": "https://www.youtube.com/watch?v=vT2GjY_Umpw"
+    },
+    {
+      "name": "Face Pull",
+      "tutorial": "https://www.youtube.com/watch?v=vj2w851ZHRM"
+    }
+  ],
+  "Shoulders": [
+    {
+      "name": "Overhead Barbell Press",
+      "tutorial": "https://www.youtube.com/watch?v=qEwKCR5JCog"
+    },
+    {
+      "name": "Lateral Raise",
+      "tutorial": "https://www.youtube.com/watch?v=kDqklk1ZESo"
+    },
+    {
+      "name": "Front Dumbbell Raise",
+      "tutorial": "https://www.youtube.com/watch?v=-t7fuZ0KhDA"
+    },
+    {
+      "name": "Reverse Pec Deck Fly",
+      "tutorial": "https://www.youtube.com/watch?v=iW7zzWle7Yw"
+    },
+    {
+      "name": "Arnold Press",
+      "tutorial": "https://www.youtube.com/watch?v=vj2w851ZHRM"
+    },
+    {
+      "name": "Cable Lateral Raise",
+      "tutorial": "https://www.youtube.com/watch?v=3VcKaXpzqRo"
+    }
+  ],
+  "Core": [
+    {
+      "name": "Plank",
+      "tutorial": "https://www.youtube.com/watch?v=pSHjTRCQxIw"
+    },
+    {
+      "name": "Russian Twist",
+      "tutorial": "https://www.youtube.com/watch?v=wkD8rjkodUI"
+    },
+    {
+      "name": "Hanging Leg Raise",
+      "tutorial": "https://www.youtube.com/watch?v=ZJ8Zdj0OPMI"
+    },
+    {
+      "name": "Mountain Climbers",
+      "tutorial": "https://www.youtube.com/watch?v=nmwgirgXLYM"
+    },
+    {
+      "name": "Cable Woodchopper",
+      "tutorial": "https://www.youtube.com/watch?v=U0tRc2ulh7o"
+    },
+    {
+      "name": "V-Ups",
+      "tutorial": "https://www.youtube.com/watch?v=PKM5pBIXrB4"
+    }
+  ]
+}

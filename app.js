@@ -4,6 +4,8 @@ const port = process.env.port || 8000;
 const app = express();
 const MongoStore = require("connect-mongo");
 const session = require("express-session");
+const fs = require("fs");
+const path = require("path");
 
 // import the authentication routes
 const {
@@ -64,6 +66,25 @@ app.get("/api/user", async (req, res) => {
   }
 
   res.json(user);
+});
+
+// Get route to send excersise data to the JSON
+app.get("/api/exercises", async (req, res) => {
+  const filePath = path.join(__dirname, "./client/src/exercises.json");
+  fs.readFile(filePath, "utf8", (err, data) => {
+    if (err) {
+      console.error("error reading file: ", err);
+      return res.status(500).send("Failed to read exercises file.");
+    }
+    try {
+      const jsonData = JSON.parse(data);
+      console.log(jsonData);
+      res.json(jsonData);
+    } catch (parseError) {
+      console.error("Error parsing JSON: ", parseError);
+      res.status(500).send("Failed to parse JSON.");
+    }
+  });
 });
 
 // middleware for the signup function

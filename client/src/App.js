@@ -1,6 +1,7 @@
 import react, { useState, useEffect } from "react";
 import Signup from "./pages/Signup.js";
 import Home from "./pages/Home.js";
+import Calendar from "./pages/calendar.js";
 import Login from "./pages/login.js";
 import MyPlan from "./pages/myPlan.js";
 import WorkoutPage from "./components/workoutPage.js";
@@ -17,6 +18,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/myPlan" element={<MyPlan />} />
         <Route path="/workoutPage/:day" element={<WorkoutPage />} />
+        <Route path="/calendar" element={<Calendar />} />
       </Routes>
     </BrowserRouter>
   );

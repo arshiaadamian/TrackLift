@@ -14,7 +14,7 @@ export default function Navbar() {
             <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="/">Calendar</Link>
+            <Link to="/calendar">Today</Link>
           </li>
         </ul>
       </nav>

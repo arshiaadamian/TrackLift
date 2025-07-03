@@ -1,0 +1,110 @@
+/* Page layout */
+body {
+  background-color: #f4f7fa;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #2c3e50;
+}
+
+/* Header */
+h1 {
+  text-align: center;
+  margin: 30px 0;
+  font-size: 2.5rem;
+  color: #34495e;
+}
+
+/* Workout form container */
+.add {
+  max-width: 600px;
+  margin: 0 auto 50px auto;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 30px;
+}
+
+/* Inputs */
+.add input[type="text"],
+.add input[type="number"] {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+/* Submit button */
+.add button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add button[type="submit"]:hover {
+  background-color: #2980b9;
+}
+
+/* Error message */
+.add p {
+  margin-top: 10px;
+  font-size: 0.95rem;
+  color: #e74c3c;
+  text-align: center;
+}
+
+/* Workouts section */
+.workouts {
+  margin-top: 30px;
+}
+
+.workouts h2 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  text-align: center;
+  color: #2c3e50;
+}
+
+/* Workout list */
+.workouts ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.workouts li {
+  background-color: #ecf0f1;
+  padding: 14px 20px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1rem;
+}
+
+/* Remove button */
+.workouts li button {
+  background-color: #e74c3c;
+  border: none;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.workouts li button:hover {
+  background-color: #c0392b;
+}

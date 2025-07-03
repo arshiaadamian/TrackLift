@@ -9,6 +9,10 @@ const addWorkoutFunction = (userCollection) => {
     }
     const { workoutName, workoutSets, day } = req.body;
 
+    if (!workoutName || !workoutSets) {
+      return res.redirect(`/workoutPage/${day}?error=missing_fields`);
+    }
+
     // testing the values received from the form
     // console.log("day is " + day);
     // console.log("workoutName is " + workoutName);
@@ -35,8 +39,23 @@ const removeWorkoutFunction = (userCollection) => {
     if (req.session.authenticated !== true) {
       return res.redirect("/login");
     }
-    const day = req.body.day;
+    const { day, index } = req.body;
     console.log("day is " + day);
+    console.log("index is " + index);
+
+    const user = await userCollection.findOne({
+      username: req.session.username,
+    });
+
+    const indexValue = user[day][index];
+    console.log("indexValue is " + indexValue);
+
+    // find the user and remove the workout at the specified index
+    await userCollection.updateOne(
+      { username: req.session.username },
+      { $pull: { [day]: indexValue } }
+    );
+
     res.redirect(`/workoutPage/${day}`);
   });
 
