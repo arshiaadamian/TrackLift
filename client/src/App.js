@@ -6,6 +6,7 @@ import Login from "./pages/login.js";
 import MyPlan from "./pages/myPlan.js";
 import WorkoutPage from "./components/workoutPage.js";
 import "bootstrap/dist/css/bootstrap.min.css";
+import ProtectedRoutes from "./ProtectedRoutes.js";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -14,11 +15,14 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/signup" element={<Signup />} />
-        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/myPlan" element={<MyPlan />} />
-        <Route path="/workoutPage/:day" element={<WorkoutPage />} />
-        <Route path="/calendar" element={<Calendar />} />
+        <Route element={<ProtectedRoutes />}>
+          <Route path="/workoutPage/:day" element={<WorkoutPage />} />
+          <Route path="/calendar" element={<Calendar />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/myPlan" element={<MyPlan />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
