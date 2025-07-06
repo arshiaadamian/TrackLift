@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/navbar";
+import "../style/home.css";
 
 function Home() {
   const [userName, setUserName] = useState("none");
@@ -26,22 +27,31 @@ function Home() {
   }, []);
   return (
     <div>
-      <div>
+      <div className="home-page">
         <h1>Home Page</h1>
 
-        <h2>Hello {userName !== "none" && userName}</h2>
+        <h2>Hi {userName !== "none" && userName}</h2>
         <h3>Exercises</h3>
-        <ul>
-          {exercises.length > 0 ? (
-            exercises.map((exercise, index) => (
-              <li key={index}>
-                {exercise.name} - {exercise.tutorial}
-              </li>
-            ))
-          ) : (
-            <p>No exercises available</p>
-          )}
-        </ul>
+        <div>
+          {Object.entries(exercises).map(([category, exerciseList]) => (
+            <div key={category}>
+              <h4>{category}</h4>
+              <ul>
+                {exerciseList.map((exercise, idx) => (
+                  <li key={idx}>
+                    <a
+                      href={exercise.tutorial}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {exercise.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
       </div>
       {<Navbar />}
     </div>
