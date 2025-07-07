@@ -1,6 +1,7 @@
 import React from "react";
 import "../style/login.css";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import logo from "../images/logo.png";
 
 function Login() {
   const location = useLocation();
@@ -10,17 +11,9 @@ function Login() {
   return (
     <div className="body">
       <form className="form-signin" action="/loggingin" method="POST">
-        <img
-          className="mb-4"
-          src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg"
-          alt=""
-          width="72"
-          height="72"
-        />
+        <img className="mb-4" src={logo} alt="logo" width="140" height="140" />
         <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
-        <label htmlFor="inputEmail" className="sr-only">
-          Email address
-        </label>
+        <label htmlFor="inputEmail" className="sr-only"></label>
         <input
           type="email"
           id="inputEmail"
@@ -30,9 +23,7 @@ function Login() {
           autoFocus=""
           name="username"
         />
-        <label htmlFor="inputPassword" className="sr-only">
-          Password
-        </label>
+        <label htmlFor="inputPassword" className="sr-only"></label>
         <input
           type="password"
           id="inputPassword"
@@ -47,13 +38,22 @@ function Login() {
         </button>
         <div className="error-message">
           {error === "user_not_exist" && (
-            <p style={{ color: "red" }}>user does not exist</p>
+            <p style={{ color: "red" }} className="error">
+              user does not exist
+            </p>
           )}
           {error === "incorrect_password" && (
-            <p style={{ color: "red" }}>incorrect password</p>
+            <p style={{ color: "red" }} className="error">
+              incorrect password
+            </p>
           )}
         </div>
-        <p className="mt-5 mb-3 text-muted">© 2017-2018</p>
+        <Link to="/signup" className="signup-link">
+          Don't have an account? click here to sign up
+        </Link>
+        <p className="mt-5 mb-3 text-muted">
+          All rights reserved to the author, Arshia Adamian.
+        </p>
       </form>
     </div>
   );
