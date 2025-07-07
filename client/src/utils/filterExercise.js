@@ -1,4 +1,4 @@
-export function filterExercise(exercises, query) {
+export default function filterExercise(exercises, query) {
   // If query is empty, return the original exercises
   if (!query.trim()) {
     return exercises;
@@ -12,7 +12,7 @@ export function filterExercise(exercises, query) {
 
   for (const category in exercises) {
     const matchingExercises = exercises[category].filter((exercises) => {
-      exercises.name.toLowerCase().includes(lowerQuery);
+      return exercises.name.toLowerCase().includes(lowerQuery);
     });
     if (matchingExercises.length > 0) {
       filtered[category] = matchingExercises;

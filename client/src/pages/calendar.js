@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/navbar.js";
+import "../style/calendar.css";
 
 export default function Calendar() {
   const now = new Date();
@@ -25,7 +26,7 @@ export default function Calendar() {
       });
   }, [currentDay]);
   return (
-    <div>
+    <div className="calendar-page">
       <h1>{currentDay}</h1>
 
       <div className="workouts">
