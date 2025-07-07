@@ -81,7 +81,6 @@ app.get("/api/exercises", async (req, res) => {
     }
     try {
       const jsonData = JSON.parse(data);
-      console.log(jsonData);
       res.json(jsonData);
     } catch (parseError) {
       console.error("Error parsing JSON: ", parseError);

@@ -67,3 +67,9 @@
   text-decoration: underline;
   color: #2b6cb0;
 }
+
+.form-inline {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
