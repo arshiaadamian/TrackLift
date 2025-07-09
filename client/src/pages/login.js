@@ -12,7 +12,7 @@ function Login() {
     <div className="body">
       <form className="form-signin" action="/loggingin" method="POST">
         <img className="mb-4" src={logo} alt="logo" width="140" height="140" />
-        <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
+        <h1 className="h3 mb-3 font-weight-normal">Sign in</h1>
         <label htmlFor="inputEmail" className="sr-only"></label>
         <input
           type="email"

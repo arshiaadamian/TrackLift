@@ -1,0 +1,79 @@
+/* signup.css */
+
+.authentication {
+  max-width: 420px;
+  margin: 60px auto;
+  padding: 30px 25px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.authentication h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 28px;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #444;
+}
+
+.form-control {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  transition: border-color 0.3s;
+}
+
+.form-control:focus {
+  border-color: #4a90e2;
+  outline: none;
+}
+
+.form-text {
+  font-size: 13px;
+  color: #888;
+  margin-top: 5px;
+}
+
+.btn {
+  width: 100%;
+  padding: 12px 18px;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.btn:hover {
+  background-color: #357ab8;
+}
+
+.user-exists p {
+  text-align: center;
+  font-weight: bold;
+  margin-top: 15px;
+  color: red;
+}
+
+/* Optional: subtle background for the whole page */
+body {
+  background-color: #f2f4f8;
+}

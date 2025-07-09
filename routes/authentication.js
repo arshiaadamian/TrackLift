@@ -37,6 +37,7 @@ const signupFunction = (userCollection) => {
       Friday: [],
       Saturday: [],
       Sunday: [],
+      dayName: "Name of the day",
     });
 
     console.log("user created successfully");

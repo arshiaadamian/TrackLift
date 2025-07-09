@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import "../style/signup.css";
 
 function Signup() {
   const location = useLocation(); // useLocation is a hook from react-router-dom that gives access to the current location object
@@ -11,7 +12,7 @@ function Signup() {
       <h1>Sign up</h1>
       <form action="submitUser" method="POST">
         <div className="form-group">
-          <label for="exampleInputEmail1">Email address</label>
+          <label for="exampleInputEmail1"></label>
           <input
             type="email"
             className="form-control"
@@ -25,7 +26,7 @@ function Signup() {
           </small>
         </div>
         <div className="form-group">
-          <label for="exampleInputPassword1">Password</label>
+          <label for="exampleInputPassword1"></label>
           <input
             type="password"
             className="form-control"

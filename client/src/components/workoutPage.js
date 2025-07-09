@@ -12,7 +12,6 @@ export default function WorkoutPage() {
       .then((data) => {
         console.log(data);
         setWorkouts(data[day] || ["error setting workouts"]);
-        console.log("Fetched workouts:", data[day]);
       })
       .catch((err) => console.error("Error fetching workouts:", err));
   }, [day]);
@@ -21,6 +20,17 @@ export default function WorkoutPage() {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const error = params.get("error");
+
+  // getting the name of the day from the database.
+  const [dayName, setDayName] = useState("");
+  useEffect(() => {
+    fetch("/api/user")
+      .then((res) => res.json())
+      .then((data) => {
+        setDayName(data.dayName || "No name set for this day");
+      });
+  }, []);
+  const [isEditing, setIsEditing] = useState(false);
 
   return (
     <div>
@@ -36,7 +46,40 @@ export default function WorkoutPage() {
       </form>
       {/* end of the form to remove a workout from the list. */}
 
-      <h1>{day || "unknown day, error"}</h1>
+      <h1>
+        {day} {dayName === "Name of the day" ? "" : `- ${dayName}`}
+      </h1>
+
+      {/* Form to get the name of the day */}
+      <form className="dayName" action="editDayName" method="POST">
+        <input type="hidden" name="day" value={day} />
+        <input
+          type="text"
+          placeholder="Name of the day"
+          name="dayName"
+          value={dayName}
+          onChange={(e) => setDayName(e.target.value)}
+          disabled={!isEditing}
+          style={{
+            backgroundColor: isEditing ? "white" : "lightgray",
+            cursor: isEditing ? "text" : "not-allowed",
+          }}
+        ></input>
+        <button
+          type={isEditing ? "submit" : "button"}
+          id="edit"
+          onClick={(e) => {
+            if (!isEditing) {
+              e.preventDefault();
+              setIsEditing(true);
+            }
+          }}
+        >
+          {isEditing ? "Save" : "Edit"}
+        </button>
+      </form>
+      {/* end of the form to get the name of the day. */}
+
       <div className="add">
         <form action="addWorkout" method="POST">
           <input

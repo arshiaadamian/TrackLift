@@ -62,4 +62,24 @@ const removeWorkoutFunction = (userCollection) => {
   return router;
 };
 
-module.exports = { addWorkoutFunction, removeWorkoutFunction };
+const editDayNameFunction = (userCollection) => {
+  router.post("/workoutPage/editDayName", async (req, res) => {
+    console.log("edit day name function hit");
+    const day = req.body.day;
+    const dayName = req.body.dayName;
+    await userCollection.updateOne(
+      { username: req.session.username },
+      { $set: { dayName: dayName } }
+    );
+
+    res.redirect(`/workoutPage/${day}`);
+  });
+
+  return router;
+};
+
+module.exports = {
+  addWorkoutFunction,
+  removeWorkoutFunction,
+  editDayNameFunction,
+};

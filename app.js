@@ -16,6 +16,7 @@ const {
 const {
   addWorkoutFunction,
   removeWorkoutFunction,
+  editDayNameFunction,
 } = require("./routes/addWorkout.js");
 
 // secret .env information
@@ -99,6 +100,8 @@ app.use("/", signinFunction(userCollection));
 app.use("/", addWorkoutFunction(userCollection));
 
 app.use("/", removeWorkoutFunction(userCollection));
+
+app.use("/", editDayNameFunction(userCollection));
 
 // run server
 app.listen(port, function () {

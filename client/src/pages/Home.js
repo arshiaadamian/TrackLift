@@ -46,12 +46,6 @@ function Home() {
                 aria-label="Search"
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
-              <button
-                className="btn btn-outline-success my-2 my-sm-0"
-                type="submit"
-              >
-                Search
-              </button>
             </form>
           </nav>
         </div>
