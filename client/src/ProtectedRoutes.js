@@ -6,7 +6,7 @@ const ProtectedRoutes = () => {
   const [auth, setAuth] = useState(null);
 
   useEffect(() => {
-    fetch(`${API_URL}/api/user`)
+    fetch(`${API_URL}/api/user`, { credentials: "include" })
       .then((res) => res.json())
       .then((data) => {
         if (data.username) {
