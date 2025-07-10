@@ -114,6 +114,11 @@ app.use("/", removeWorkoutFunction(userCollection));
 
 app.use("/", editDayNameFunction(userCollection));
 
+// for testing purposes
+app.get("/test", (req, res) => {
+  res.send("✅ Backend is working!");
+});
+
 // run server
 app.listen(port, function () {
   console.log("app is live on http://localhost:" + port);
