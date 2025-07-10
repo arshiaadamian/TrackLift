@@ -31,7 +31,7 @@ const node_session_secret = process.env.NODE_SESSION_SECRET;
 // allow cross origin requests
 const allowedOrigins = [
   "http://localhost:3000", // for local dev
-  "https://tracklift-client.onrender.com", // your deployed frontend
+  "https://tracklift-1.onrender.com", // your deployed frontend
 ];
 
 app.use(
