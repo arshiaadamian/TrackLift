@@ -85,10 +85,7 @@ app.get("/api/user", async (req, res) => {
 
 // Get route to send excersise data to the JSON
 app.get("/api/exercises", async (req, res) => {
-  const filePath = path.join(
-    __dirname,
-    "./client/src/components/exercises.json"
-  );
+  const filePath = path.join(__dirname, "./exercises.json");
   fs.readFile(filePath, "utf8", (err, data) => {
     if (err) {
       console.error("error reading file: ", err);
