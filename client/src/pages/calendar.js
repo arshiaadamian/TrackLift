@@ -17,8 +17,10 @@ export default function Calendar() {
   const currentDay = daysOfWeek[dayIndex];
 
   const [workouts, setWorkouts] = useState([]);
+  const API_URL = process.env.REACT_APP_API_URL || "";
+  console.log("API_URL", API_URL);
   useEffect(() => {
-    fetch("/api/user")
+    fetch(`${API_URL}/api/user`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);

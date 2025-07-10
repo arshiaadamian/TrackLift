@@ -4,11 +4,13 @@ import "../style/home.css";
 import filterExercise from "../utils/filterExercise.js";
 
 function Home() {
+  const API_URL = process.env.REACT_APP_API_URL || "";
+
   const [userName, setUserName] = useState("none");
   useEffect(() => {
     // fetch the username from the server
     console.log("fetching username from server");
-    fetch("/api/user")
+    fetch(`${API_URL}/api/user`)
       .then((res) => {
         return res.json();
       })
@@ -19,7 +21,7 @@ function Home() {
 
   const [exercises, setExercises] = useState([]);
   useEffect(() => {
-    fetch("/api/exercises")
+    fetch(`${API_URL}/api/exercises`)
       .then((res) => res.json())
       .then((data) => {
         setExercises(data);
