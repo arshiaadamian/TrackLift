@@ -8,7 +8,7 @@ const session = require("express-session");
 const fs = require("fs");
 const path = require("path");
 
-// import the authentication routes
+// import the authentication and workout routes
 const {
   signupFunction,
   signinFunction,
@@ -20,15 +20,13 @@ const {
   editDayNameFunction,
 } = require("./routes/addWorkout.js");
 
-// secret .env information
+// .env configuration
 const mongodb_host = process.env.MONGODB_HOST;
-const mongodb_user = process.env.MONGODB_USER;
-const mongodb_password = process.env.MONGODB_PASSWORD;
 const mongodb_database = process.env.MONGODB_DATABASE;
 const mongodb_session_secret = process.env.MONGODB_SESSION_SECRET;
 const node_session_secret = process.env.NODE_SESSION_SECRET;
 
-// Save sessions in mongoDB instead of memory
+// Set up MongoDB session store
 const mongoStore = MongoStore.create({
   mongoUrl: mongodb_host,
   crypto: {
@@ -36,17 +34,16 @@ const mongoStore = MongoStore.create({
   },
 });
 
-// using database connection
-var { database } = require("./databaseConnection.js");
-// accessing the users collection in the database
+// connect to database
+const { database } = require("./databaseConnection.js");
 const userCollection = database.db(mongodb_database).collection("users");
 
-// middleware to have access to all files in /public with no further routing needed
+// middlewares
+app.use(cors());
 app.use(express.static(__dirname + "/client/public"));
-// middleware to parse HTML elements into request body
 app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
-// middleware to store sessiions in mongoDB instead of memory
 app.use(
   session({
     secret: node_session_secret,
@@ -56,13 +53,13 @@ app.use(
   })
 );
 
+// API: Get current user info
 app.get("/api/user", async (req, res) => {
   if (!req.session.authenticated || !req.session.username) {
     return res.status(401).json({ error: "not authenticated" });
   }
 
   const user = await userCollection.findOne({ username: req.session.username });
-
   if (!user) {
     return res.status(404).json({ error: "user not found" });
   }
@@ -70,43 +67,37 @@ app.get("/api/user", async (req, res) => {
   res.json(user);
 });
 
-// Get route to send excersise data to the JSON
+// API: Load exercises from file
 app.get("/api/exercises", async (req, res) => {
   const filePath = path.join(__dirname, "./exercises.json");
   fs.readFile(filePath, "utf8", (err, data) => {
     if (err) {
-      console.error("error reading file: ", err);
+      console.error("Error reading file:", err);
       return res.status(500).send("Failed to read exercises file.");
     }
     try {
       const jsonData = JSON.parse(data);
       res.json(jsonData);
     } catch (parseError) {
-      console.error("Error parsing JSON: ", parseError);
+      console.error("Error parsing JSON:", parseError);
       res.status(500).send("Failed to parse JSON.");
     }
   });
 });
 
-// middleware for the signup function
+// Route handlers
 app.use("/", signupFunction(userCollection));
-
-// middleware for the signin function
 app.use("/", signinFunction(userCollection));
-
-// middleware for the workout page
 app.use("/", addWorkoutFunction(userCollection));
-
 app.use("/", removeWorkoutFunction(userCollection));
-
 app.use("/", editDayNameFunction(userCollection));
 
-// for testing purposes
+// Test route
 app.get("/test", (req, res) => {
   res.send("✅ Backend is working!");
 });
 
-// Serve the React app for any other routes
+// Serve React app (client/build) in production
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "client/build")));
 
@@ -115,7 +106,7 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-// run server
-app.listen(port, function () {
-  console.log("app is live on http://localhost:" + port);
+// Start server
+app.listen(port, () => {
+  console.log("✅ App is running at http://localhost:" + port);
 });
