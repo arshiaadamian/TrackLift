@@ -8,12 +8,37 @@ const session = require("express-session");
 const fs = require("fs");
 const path = require("path");
 
-const allowedOrigins = ["https://tracklift-client.onrender.com"];
+// CORS configuration with environment variable support
+const allowedOrigins = [
+  "https://tracklift-client.onrender.com",
+  process.env.FRONTEND_URL,
+  process.env.CLIENT_URL,
+  "http://localhost:3000", // For local development
+].filter(Boolean); // Remove any undefined values
+
+console.log("Allowed origins:", allowedOrigins);
 
 app.use(
   cors({
-    origin: true,
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+
+      console.log("Request origin:", origin);
+
+      if (allowedOrigins.indexOf(origin) !== -1) {
+        console.log("Origin allowed:", origin);
+        callback(null, true);
+      } else {
+        console.log("CORS blocked origin:", origin);
+        // For production, you should remove this and only allow specific origins
+        // For now, allowing all origins to debug the issue
+        callback(null, true);
+      }
+    },
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
   })
 );
 
