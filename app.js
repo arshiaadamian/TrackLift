@@ -3,12 +3,19 @@ const express = require("express");
 const cors = require("cors");
 const port = process.env.port || 8000;
 const app = express();
+app.use(
+  cors({
+    origin: "https://your-frontend-app.onrender.com", // replace with actual frontend URL
+    credentials: true,
+  })
+);
+
 const MongoStore = require("connect-mongo");
 const session = require("express-session");
 const fs = require("fs");
 const path = require("path");
 
-// import the authentication and workout routes
+// import the authentication routes
 const {
   signupFunction,
   signinFunction,
@@ -20,13 +27,15 @@ const {
   editDayNameFunction,
 } = require("./routes/addWorkout.js");
 
-// .env configuration
+// secret .env information
 const mongodb_host = process.env.MONGODB_HOST;
+const mongodb_user = process.env.MONGODB_USER;
+const mongodb_password = process.env.MONGODB_PASSWORD;
 const mongodb_database = process.env.MONGODB_DATABASE;
 const mongodb_session_secret = process.env.MONGODB_SESSION_SECRET;
 const node_session_secret = process.env.NODE_SESSION_SECRET;
 
-// Set up MongoDB session store
+// Save sessions in mongoDB instead of memory
 const mongoStore = MongoStore.create({
   mongoUrl: mongodb_host,
   crypto: {
@@ -34,16 +43,17 @@ const mongoStore = MongoStore.create({
   },
 });
 
-// connect to database
-const { database } = require("./databaseConnection.js");
+// using database connection
+var { database } = require("./databaseConnection.js");
+// accessing the users collection in the database
 const userCollection = database.db(mongodb_database).collection("users");
 
-// middlewares
-app.use(cors());
+// middleware to have access to all files in /public with no further routing needed
 app.use(express.static(__dirname + "/client/public"));
+// middleware to parse HTML elements into request body
 app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
 
+// middleware to store sessiions in mongoDB instead of memory
 app.use(
   session({
     secret: node_session_secret,
@@ -53,13 +63,13 @@ app.use(
   })
 );
 
-// API: Get current user info
 app.get("/api/user", async (req, res) => {
   if (!req.session.authenticated || !req.session.username) {
     return res.status(401).json({ error: "not authenticated" });
   }
 
   const user = await userCollection.findOne({ username: req.session.username });
+
   if (!user) {
     return res.status(404).json({ error: "user not found" });
   }
@@ -67,46 +77,43 @@ app.get("/api/user", async (req, res) => {
   res.json(user);
 });
 
-// API: Load exercises from file
+// Get route to send excersise data to the JSON
 app.get("/api/exercises", async (req, res) => {
   const filePath = path.join(__dirname, "./exercises.json");
   fs.readFile(filePath, "utf8", (err, data) => {
     if (err) {
-      console.error("Error reading file:", err);
+      console.error("error reading file: ", err);
       return res.status(500).send("Failed to read exercises file.");
     }
     try {
       const jsonData = JSON.parse(data);
       res.json(jsonData);
     } catch (parseError) {
-      console.error("Error parsing JSON:", parseError);
+      console.error("Error parsing JSON: ", parseError);
       res.status(500).send("Failed to parse JSON.");
     }
   });
 });
 
-// Route handlers
+// middleware for the signup function
 app.use("/", signupFunction(userCollection));
+
+// middleware for the signin function
 app.use("/", signinFunction(userCollection));
+
+// middleware for the workout page
 app.use("/", addWorkoutFunction(userCollection));
+
 app.use("/", removeWorkoutFunction(userCollection));
+
 app.use("/", editDayNameFunction(userCollection));
 
-// Test route
+// for testing purposes
 app.get("/test", (req, res) => {
   res.send("✅ Backend is working!");
 });
 
-// Serve React app (client/build) in production
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "client/build")));
-
-  app.get("/*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client/build", "index.html"));
-  });
-}
-
-// Start server
-app.listen(port, () => {
-  console.log("✅ App is running at http://localhost:" + port);
+// run server
+app.listen(port, function () {
+  console.log("app is live on http://localhost:" + port);
 });
