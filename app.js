@@ -8,12 +8,12 @@ const session = require("express-session");
 const fs = require("fs");
 const path = require("path");
 
-const allowedOrigins = ["https://tracklift-client.onrender.com/"];
+const allowedOrigins = ["https://tracklift-client.onrender.com"];
 
 app.use(
   cors({
-    origin: allowedOrigins,
-    credentials: true, // this is important for cookies/session
+    origin: true,
+    credentials: true,
   })
 );
 
