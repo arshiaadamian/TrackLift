@@ -10,7 +10,7 @@ function Home() {
   useEffect(() => {
     // fetch the username from the server
     console.log("fetching username from server");
-    fetch(`${API_URL}/api/user`, { credentials: "include" })
+    fetch(`${API_URL}/api/user`)
       .then((res) => {
         return res.json();
       })
@@ -21,7 +21,7 @@ function Home() {
 
   const [exercises, setExercises] = useState([]);
   useEffect(() => {
-    fetch(`${API_URL}/api/exercises`, { credentials: "include" })
+    fetch(`${API_URL}/api/exercises`)
       .then((res) => res.json())
       .then((data) => {
         setExercises(data);
