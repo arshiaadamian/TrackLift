@@ -20,7 +20,7 @@ export default function Calendar() {
   const API_URL = process.env.REACT_APP_API_URL || "";
   console.log("API_URL", API_URL);
   useEffect(() => {
-    fetch(`${API_URL}/api/user`)
+    fetch(`${API_URL}/api/user`, { credentials: "include" })
       .then((res) => res.json())
       .then((data) => {
         console.log(data);

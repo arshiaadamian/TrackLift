@@ -6,8 +6,9 @@ import "../style/workoutPage.css";
 export default function WorkoutPage() {
   const { day } = useParams();
   const [workouts, setWorkouts] = useState([]);
+  const API_URL = process.env.REACT_APP_API_URL || "";
   useEffect(() => {
-    fetch("/api/user")
+    fetch(`${API_URL}/api/user`, { credentials: "include" })
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -24,7 +25,7 @@ export default function WorkoutPage() {
   // getting the name of the day from the database.
   const [dayName, setDayName] = useState("");
   useEffect(() => {
-    fetch("/api/user")
+    fetch(`${API_URL}/api/user`, { credentials: "include" })
       .then((res) => res.json())
       .then((data) => {
         setDayName(data.dayName || "No name set for this day");
