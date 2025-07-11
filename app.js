@@ -1,19 +1,23 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-const port = process.env.port || 8000;
-const app = express();
 const MongoStore = require("connect-mongo");
 const session = require("express-session");
 const fs = require("fs");
 const path = require("path");
 
+const app = express();
+const port = process.env.PORT || 8000; // FIXED here ✅
+
 const allowedOrigins = ["https://tracklift-client.onrender.com"];
+if (process.env.NODE_ENV !== "production") {
+  allowedOrigins.push("http://localhost:3000");
+}
 
 app.use(
   cors({
     origin: allowedOrigins,
-    credentials: true, // this is important for cookies/session
+    credentials: true,
   })
 );
 
