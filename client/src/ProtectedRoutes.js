@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 const ProtectedRoutes = () => {
   const API_URL = process.env.REACT_APP_API_URL || "";
   const [auth, setAuth] = useState(null);
+  console.log("API_URL in ProtectedRoutes:", API_URL);
 
   useEffect(() => {
     fetch(`${API_URL}/api/user`, { credentials: "include" })
