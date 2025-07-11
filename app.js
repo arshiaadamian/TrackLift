@@ -119,12 +119,14 @@ app.get("/test", (req, res) => {
   res.send("✅ Backend is working!");
 });
 
-// Serve the React app
-app.use(express.static(path.join(__dirname, "client/build")));
+// Serve the React app for any other routes
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "client/build")));
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client/build", "index.html"));
-});
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client/build", "index.html"));
+  });
+}
 
 // run server
 app.listen(port, function () {
