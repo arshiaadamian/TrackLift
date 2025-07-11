@@ -3,17 +3,19 @@ const express = require("express");
 const cors = require("cors");
 const port = process.env.port || 8000;
 const app = express();
-app.use(
-  cors({
-    origin: "https://your-frontend-app.onrender.com", // replace with actual frontend URL
-    credentials: true,
-  })
-);
-
 const MongoStore = require("connect-mongo");
 const session = require("express-session");
 const fs = require("fs");
 const path = require("path");
+
+const allowedOrigins = ["https://tracklift-client.onrender.com"];
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true, // this is important for cookies/session
+  })
+);
 
 // import the authentication routes
 const {
