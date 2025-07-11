@@ -28,19 +28,6 @@ const mongodb_database = process.env.MONGODB_DATABASE;
 const mongodb_session_secret = process.env.MONGODB_SESSION_SECRET;
 const node_session_secret = process.env.NODE_SESSION_SECRET;
 
-// allow cross origin requests
-// const allowedOrigins = [
-//   "http://localhost:3000", // for local dev
-//   "https://tracklift-1.onrender.com", // your deployed frontend
-// ];
-
-// app.use(
-//   cors({
-//     origin: allowedOrigins,
-//     credentials: true,
-//   })
-// );
-
 // Save sessions in mongoDB instead of memory
 const mongoStore = MongoStore.create({
   mongoUrl: mongodb_host,
