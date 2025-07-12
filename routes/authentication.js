@@ -1,10 +1,11 @@
 const express = require("express");
-const router = express.Router();
 const bcrypt = require("bcrypt");
 const saltRounds = 12;
 const expireTime = 1 * 60 * 60 * 1000; // 1 hour in milliseconds
 
 const signupFunction = (userCollection) => {
+  const router = express.Router();
+  
   router.post("/submitUser", async (req, res) => {
     console.log("signup route hit");
     // values of username and password are taken from the request body
@@ -56,6 +57,8 @@ const signupFunction = (userCollection) => {
 
 // post login
 const signinFunction = (userCollection) => {
+  const router = express.Router();
+  
   router.post("/loggingin", async (req, res) => {
     console.log("signin route hit");
     const { username, password } = req.body;

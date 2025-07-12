@@ -1,7 +1,8 @@
 const express = require("express");
-const router = express.Router();
 
 const addWorkoutFunction = (userCollection) => {
+  const router = express.Router();
+  
   router.post("/workoutPage/addWorkout", async (req, res) => {
     console.log("add workout function hit");
     if (req.session.authenticated !== true) {
@@ -34,6 +35,8 @@ const addWorkoutFunction = (userCollection) => {
 };
 
 const removeWorkoutFunction = (userCollection) => {
+  const router = express.Router();
+  
   router.post("/workoutPage/removingWorkout", async (req, res) => {
     console.log("remove workout function hit");
     if (req.session.authenticated !== true) {
@@ -63,6 +66,8 @@ const removeWorkoutFunction = (userCollection) => {
 };
 
 const editDayNameFunction = (userCollection) => {
+  const router = express.Router();
+  
   router.post("/workoutPage/editDayName", async (req, res) => {
     console.log("edit day name function hit");
     const day = req.body.day;
