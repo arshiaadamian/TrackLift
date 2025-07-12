@@ -11,12 +11,8 @@ const path = require("path");
 // CORS configuration with environment variable support
 const allowedOrigins = [
   "https://tracklift-client.onrender.com",
-  process.env.FRONTEND_URL,
-  process.env.CLIENT_URL,
-  "http://localhost:3000", // For local development
-].filter(Boolean); // Remove any undefined values
-
-console.log("Allowed origins:", allowedOrigins);
+  "http://localhost:3000",
+];
 
 app.use((req, res, next) => {
   const origin = req.headers.origin;
@@ -32,7 +28,7 @@ app.use((req, res, next) => {
   );
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
 
-  // For preflight requests
+  // Handle preflight
   if (req.method === "OPTIONS") {
     return res.sendStatus(200);
   }
