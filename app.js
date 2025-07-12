@@ -9,32 +9,32 @@ const fs = require("fs");
 const path = require("path");
 
 // CORS configuration with environment variable support
-const allowedOrigins = [
-  "https://tracklift-client.onrender.com",
-  "http://localhost:3000",
-];
+// const allowedOrigins = [
+//   "https://tracklift-client.onrender.com",
+//   "http://localhost:3000",
+// ];
 
-app.use((req, res, next) => {
-  const origin = req.headers.origin;
+// app.use((req, res, next) => {
+//   const origin = req.headers.origin;
 
-  if (allowedOrigins.includes(origin)) {
-    res.setHeader("Access-Control-Allow-Origin", origin);
-  }
+//   if (allowedOrigins.includes(origin)) {
+//     res.setHeader("Access-Control-Allow-Origin", origin);
+//   }
 
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PUT, DELETE, OPTIONS"
-  );
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+//   res.setHeader("Access-Control-Allow-Credentials", "true");
+//   res.setHeader(
+//     "Access-Control-Allow-Methods",
+//     "GET, POST, PUT, DELETE, OPTIONS"
+//   );
+//   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
 
-  // Handle preflight
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(200);
-  }
+//   // Handle preflight
+//   if (req.method === "OPTIONS") {
+//     return res.sendStatus(200);
+//   }
 
-  next();
-});
+//   next();
+// });
 
 // import the authentication routes
 const {
@@ -70,7 +70,7 @@ var { database } = require("./databaseConnection.js");
 const userCollection = database.db(mongodb_database).collection("users");
 
 // middleware to have access to all files in /public with no further routing needed
-app.use(express.static(__dirname + "/client/public"));
+// app.use(express.static(__dirname + "/client/public"));
 // middleware to parse HTML elements into request body
 app.use(express.urlencoded({ extended: false }));
 
@@ -132,6 +132,14 @@ app.use("/", editDayNameFunction(userCollection));
 // for testing purposes
 app.get("/test", (req, res) => {
   res.send("✅ Backend is working!");
+});
+
+// Serve static files from React build
+app.use(express.static(path.join(__dirname, "client", "build")));
+
+// Catch-all route to serve React for any route not handled by API
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
 
 // run server
