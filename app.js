@@ -71,7 +71,8 @@ const userCollection = database.db(mongodb_database).collection("users");
 
 // middleware to have access to all files in /public with no further routing needed
 // app.use(express.static(__dirname + "/client/public"));
-// middleware to parse HTML elements into request body
+// middleware to parse JSON and HTML elements into request body
+app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // middleware to store sessiions in mongoDB instead of memory
@@ -116,18 +117,12 @@ app.get("/api/exercises", async (req, res) => {
   });
 });
 
-// middleware for the signup function
-app.use("/", signupFunction(userCollection));
-
-// middleware for the signin function
-app.use("/", signinFunction(userCollection));
-
-// middleware for the workout page
-app.use("/", addWorkoutFunction(userCollection));
-
-app.use("/", removeWorkoutFunction(userCollection));
-
-app.use("/", editDayNameFunction(userCollection));
+// API routes - must come before static file serving
+app.use("/api", signupFunction(userCollection));
+app.use("/api", signinFunction(userCollection));
+app.use("/api", addWorkoutFunction(userCollection));
+app.use("/api", removeWorkoutFunction(userCollection));
+app.use("/api", editDayNameFunction(userCollection));
 
 // for testing purposes
 app.get("/test", (req, res) => {
