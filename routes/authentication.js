@@ -85,8 +85,7 @@ const signinFunction = (userCollection) => {
     console.log(req.session.user_id);
 
     // redirect to the home page after successful login
-    // res.redirect("/");
-    res.status(200).json({ message: "login successful" });
+    res.redirect("/");
   });
 
   return router;
