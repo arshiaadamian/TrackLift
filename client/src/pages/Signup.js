@@ -10,7 +10,7 @@ function Signup() {
   return (
     <div className="authentication">
       <h1>Sign up</h1>
-      <form action="submitUser" method="POST">
+      <form action="/api/submitUser" method="POST">
         <div className="form-group">
           <label for="exampleInputEmail1"></label>
           <input

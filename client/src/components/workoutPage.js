@@ -38,7 +38,7 @@ export default function WorkoutPage() {
       {/* This form is used to remove a workout from the list. */}
       <form
         style={{ display: "none" }}
-        action="/workoutPage/removingWorkout"
+        action="/api/workoutPage/removingWorkout"
         method="POST"
         id="removeWorkout"
       >
@@ -52,7 +52,7 @@ export default function WorkoutPage() {
       </h1>
 
       {/* Form to get the name of the day */}
-      <form className="dayName" action="editDayName" method="POST">
+      <form className="dayName" action="/api/workoutPage/editDayName" method="POST">
         <input type="hidden" name="day" value={day} />
         <input
           type="text"
@@ -82,7 +82,7 @@ export default function WorkoutPage() {
       {/* end of the form to get the name of the day. */}
 
       <div className="add">
-        <form action="addWorkout" method="POST">
+        <form action="/api/workoutPage/addWorkout" method="POST">
           <input
             type="text"
             placeholder="Name of workout"
