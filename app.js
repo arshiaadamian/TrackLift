@@ -85,6 +85,7 @@ app.use(
   })
 );
 
+// API routes
 app.get("/api/user", async (req, res) => {
   if (!req.session.authenticated || !req.session.username) {
     return res.status(401).json({ error: "not authenticated" });
@@ -117,12 +118,122 @@ app.get("/api/exercises", async (req, res) => {
   });
 });
 
-// API routes - must come before static file serving
-app.use("/api", signupFunction(userCollection));
-app.use("/api", signinFunction(userCollection));
-app.use("/api", addWorkoutFunction(userCollection));
-app.use("/api", removeWorkoutFunction(userCollection));
-app.use("/api", editDayNameFunction(userCollection));
+// Authentication routes
+app.post("/api/submitUser", async (req, res) => {
+  console.log("signup route hit");
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    console.log("username and password are required");
+    return res.status(400).send("Username and password are required");
+  }
+
+  const existingUser = await userCollection.findOne({ username: username });
+  if (existingUser) {
+    console.log("user already exists");
+    return res.redirect("/signup?error=user_exists");
+  }
+
+  const bcrypt = require("bcrypt");
+  const saltRounds = 12;
+  const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+  await userCollection.insertOne({
+    username: username,
+    password: hashedPassword,
+    Monday: [],
+    Tuesday: [],
+    Wednesday: [],
+    Thursday: [],
+    Friday: [],
+    Saturday: [],
+    Sunday: [],
+    dayName: "Name of the day",
+  });
+
+  console.log("user created successfully");
+  req.session.authenticated = true;
+  req.session.username = username;
+  req.session.cookie.maxAge = 1 * 60 * 60 * 1000; // 1 hour
+  res.redirect("/");
+});
+
+app.post("/api/loggingin", async (req, res) => {
+  console.log("signin route hit");
+  const { username, password } = req.body;
+  const user = await userCollection.findOne({ username: username });
+
+  if (!user) {
+    console.log("user not found");
+    return res.redirect("/login?error=user_not_exist");
+  }
+
+  const bcrypt = require("bcrypt");
+  const validPassword = await bcrypt.compare(password, user.password);
+  if (!validPassword) {
+    console.log("password is incorrect");
+    return res.redirect("/login?error=incorrect_password");
+  }
+
+  req.session.authenticated = true;
+  req.session.username = username;
+  req.session.cookie.maxAge = 1 * 60 * 60 * 1000; // 1 hour
+  req.session.user_id = user._id;
+  res.redirect("/");
+});
+
+// Workout routes
+app.post("/api/workoutPage/addWorkout", async (req, res) => {
+  console.log("add workout function hit");
+  if (req.session.authenticated !== true) {
+    return res.redirect("/login");
+  }
+  const { workoutName, workoutSets, day } = req.body;
+
+  if (!workoutName || !workoutSets) {
+    return res.redirect(`/workoutPage/${day}?error=missing_fields`);
+  }
+
+  const update = { workoutName, workoutSets };
+  await userCollection.updateOne(
+    { username: req.session.username },
+    { $push: { [day]: update } }
+  );
+
+  res.redirect(`/workoutPage/${day}`);
+});
+
+app.post("/api/workoutPage/removingWorkout", async (req, res) => {
+  console.log("remove workout function hit");
+  if (req.session.authenticated !== true) {
+    return res.redirect("/login");
+  }
+  const { day, index } = req.body;
+
+  const user = await userCollection.findOne({
+    username: req.session.username,
+  });
+
+  const indexValue = user[day][index];
+  await userCollection.updateOne(
+    { username: req.session.username },
+    { $pull: { [day]: indexValue } }
+  );
+
+  res.redirect(`/workoutPage/${day}`);
+});
+
+app.post("/api/workoutPage/editDayName", async (req, res) => {
+  console.log("edit day name function hit");
+  const day = req.body.day;
+  const dayName = req.body.dayName;
+  await userCollection.updateOne(
+    { username: req.session.username },
+    { $set: { dayName: dayName } }
+  );
+
+  res.redirect(`/workoutPage/${day}`);
+});
 
 // for testing purposes
 app.get("/test", (req, res) => {
