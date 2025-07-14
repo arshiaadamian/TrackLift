@@ -15,7 +15,7 @@ export default function Calendar() {
     "Saturday",
   ];
   const currentDay = daysOfWeek[dayIndex];
-
+  const [dayName, setDayName] = useState("");
   const [workouts, setWorkouts] = useState([]);
   const API_URL = process.env.REACT_APP_API_URL || "";
   console.log("API_URL", API_URL);
@@ -29,9 +29,19 @@ export default function Calendar() {
         );
       });
   }, [currentDay]);
+
+  useEffect(() => {
+    fetch(`${API_URL}/api/user`, { credentials: "include" })
+      .then((res) => res.json())
+      .then((data) => {
+        setDayName(data[currentDay].dayName || "No name set for this day");
+      });
+  }, [currentDay]);
   return (
     <div className="calendar-page">
-      <h1>{currentDay}</h1>
+      <h1>
+        {currentDay} - {dayName}
+      </h1>
 
       <div className="workouts">
         <h3>Workouts</h3>
