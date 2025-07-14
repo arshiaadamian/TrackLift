@@ -2,7 +2,7 @@ const express = require("express");
 
 const addWorkoutFunction = (userCollection) => {
   const router = express.Router();
-  
+
   router.post("/workoutPage/addWorkout", async (req, res) => {
     console.log("add workout function hit");
     if (req.session.authenticated !== true) {
@@ -36,7 +36,7 @@ const addWorkoutFunction = (userCollection) => {
 
 const removeWorkoutFunction = (userCollection) => {
   const router = express.Router();
-  
+
   router.post("/workoutPage/removingWorkout", async (req, res) => {
     console.log("remove workout function hit");
     if (req.session.authenticated !== true) {
@@ -67,17 +67,42 @@ const removeWorkoutFunction = (userCollection) => {
 
 const editDayNameFunction = (userCollection) => {
   const router = express.Router();
-  
-  router.post("/workoutPage/editDayName", async (req, res) => {
+
+  router.post("/api/workoutPage/editDayName", async (req, res) => {
     console.log("edit day name function hit");
     const day = req.body.day;
     const dayName = req.body.dayName;
     await userCollection.updateOne(
       { username: req.session.username },
-      { $set: { dayName: dayName } }
+      { $set: { [`${day}.dayName`]: dayName } }
     );
 
     res.redirect(`/workoutPage/${day}`);
+  });
+
+  return router;
+};
+
+// add workout from the home page, workout list.
+const addWorkoutFromListFunction = (userCollection) => {
+  const router = express.Router();
+
+  router.post("/api/addExerciseFromList", async (req, res) => {
+    console.log("add exercise from list function hit");
+    const day = req.body.day;
+    const exercise = req.body.excerciseName;
+    console.log("day is " + day);
+    console.log("exercise is " + exercise);
+    const update = { workoutName: exercise, workoutSets: 3 };
+    await userCollection.updateOne(
+      {
+        username: req.session.username,
+      },
+      {
+        $push: { [`${day}.exercises`]: update },
+      }
+    );
+    res.redirect("/");
   });
 
   return router;
@@ -87,4 +112,5 @@ module.exports = {
   addWorkoutFunction,
   removeWorkoutFunction,
   editDayNameFunction,
+  addWorkoutFromListFunction,
 };

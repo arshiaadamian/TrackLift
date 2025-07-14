@@ -8,34 +8,6 @@ const session = require("express-session");
 const fs = require("fs");
 const path = require("path");
 
-// CORS configuration with environment variable support
-// const allowedOrigins = [
-//   "https://tracklift-client.onrender.com",
-//   "http://localhost:3000",
-// ];
-
-// app.use((req, res, next) => {
-//   const origin = req.headers.origin;
-
-//   if (allowedOrigins.includes(origin)) {
-//     res.setHeader("Access-Control-Allow-Origin", origin);
-//   }
-
-//   res.setHeader("Access-Control-Allow-Credentials", "true");
-//   res.setHeader(
-//     "Access-Control-Allow-Methods",
-//     "GET, POST, PUT, DELETE, OPTIONS"
-//   );
-//   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-
-//   // Handle preflight
-//   if (req.method === "OPTIONS") {
-//     return res.sendStatus(200);
-//   }
-
-//   next();
-// });
-
 // import the authentication routes
 const {
   signupFunction,
@@ -46,6 +18,7 @@ const {
   addWorkoutFunction,
   removeWorkoutFunction,
   editDayNameFunction,
+  addWorkoutFromListFunction,
 } = require("./routes/addWorkout.js");
 
 // secret .env information
@@ -141,14 +114,13 @@ app.post("/api/submitUser", async (req, res) => {
   await userCollection.insertOne({
     username: username,
     password: hashedPassword,
-    Monday: [],
-    Tuesday: [],
-    Wednesday: [],
-    Thursday: [],
-    Friday: [],
-    Saturday: [],
-    Sunday: [],
-    dayName: "Name of the day",
+    Monday: { dayName: "", exercises: [] },
+    Tuesday: { dayName: "", exercises: [] },
+    Wednesday: { dayName: "", exercises: [] },
+    Thursday: { dayName: "", exercises: [] },
+    Friday: { dayName: "", exercises: [] },
+    Saturday: { dayName: "", exercises: [] },
+    Sunday: { dayName: "", exercises: [] },
   });
 
   console.log("user created successfully");
@@ -197,7 +169,7 @@ app.post("/api/workoutPage/addWorkout", async (req, res) => {
   const update = { workoutName, workoutSets };
   await userCollection.updateOne(
     { username: req.session.username },
-    { $push: { [day]: update } }
+    { $push: { [`${day}.exercises`]: update } }
   );
 
   res.redirect(`/workoutPage/${day}`);
@@ -214,26 +186,32 @@ app.post("/api/workoutPage/removingWorkout", async (req, res) => {
     username: req.session.username,
   });
 
-  const indexValue = user[day][index];
+  const indexValue = user[day].exercises[index];
   await userCollection.updateOne(
     { username: req.session.username },
-    { $pull: { [day]: indexValue } }
+    { $pull: { [`${day}.exercises`]: indexValue } }
   );
 
   res.redirect(`/workoutPage/${day}`);
 });
 
-app.post("/api/workoutPage/editDayName", async (req, res) => {
-  console.log("edit day name function hit");
-  const day = req.body.day;
-  const dayName = req.body.dayName;
-  await userCollection.updateOne(
-    { username: req.session.username },
-    { $set: { dayName: dayName } }
-  );
+// app.post("/api/workoutPage/editDayName", async (req, res) => {
+//   console.log("edit day name function hit");
+//   const day = req.body.day;
+//   const dayName = req.body.dayName;
+//   await userCollection.updateOne(
+//     { username: req.session.username },
+//     { $set: { dayName: dayName } }
+//   );
 
-  res.redirect(`/workoutPage/${day}`);
-});
+//   res.redirect(`/workoutPage/${day}`);
+// });
+
+// Add workout from the home page, workout list.
+app.use("/", addWorkoutFromListFunction(userCollection));
+
+// edit day name route
+app.use("/", editDayNameFunction(userCollection));
 
 // for testing purposes
 app.get("/test", (req, res) => {

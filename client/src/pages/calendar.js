@@ -24,7 +24,9 @@ export default function Calendar() {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        setWorkouts(data[currentDay] || ["No workouts scheduled for today"]);
+        setWorkouts(
+          data[currentDay].exercises || ["No workouts scheduled for today"]
+        );
       });
   }, [currentDay]);
   return (

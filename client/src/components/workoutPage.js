@@ -12,7 +12,7 @@ export default function WorkoutPage() {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        setWorkouts(data[day] || ["error setting workouts"]);
+        setWorkouts(data[day].exercises || ["error setting workouts"]);
       })
       .catch((err) => console.error("Error fetching workouts:", err));
   }, [day]);
@@ -28,7 +28,7 @@ export default function WorkoutPage() {
     fetch(`${API_URL}/api/user`, { credentials: "include" })
       .then((res) => res.json())
       .then((data) => {
-        setDayName(data.dayName || "No name set for this day");
+        setDayName(data[day].dayName || "No name set for this day");
       });
   }, []);
   const [isEditing, setIsEditing] = useState(false);
@@ -52,7 +52,11 @@ export default function WorkoutPage() {
       </h1>
 
       {/* Form to get the name of the day */}
-      <form className="dayName" action="/api/workoutPage/editDayName" method="POST">
+      <form
+        className="dayName"
+        action="/api/workoutPage/editDayName"
+        method="POST"
+      >
         <input type="hidden" name="day" value={day} />
         <input
           type="text"

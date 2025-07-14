@@ -68,6 +68,41 @@ function Home() {
                     >
                       {exercise.name}
                     </a>
+                    <div className="dropdown">
+                      <button className="dropdown-btn">Add to plan</button>
+                      <form
+                        className="dropdown-content"
+                        action="/api/addExerciseFromList"
+                        method="POST"
+                      >
+                        <input
+                          type="hidden"
+                          name="excerciseName"
+                          value={exercise.name}
+                        />
+                        <button value="Monday" type="submit" name="day">
+                          Monday
+                        </button>
+                        <button value="Tuesday" type="submit" name="day">
+                          Tuesday
+                        </button>
+                        <button value="Wednesday" type="submit" name="day">
+                          Wednesday
+                        </button>
+                        <button value="Thursday" type="submit" name="day">
+                          Thursday
+                        </button>
+                        <button value="Friday" type="submit" name="day">
+                          Friday
+                        </button>
+                        <button value="Saturday" type="submit" name="day">
+                          Saturday
+                        </button>
+                        <button value="Sunday" type="submit" name="day">
+                          Sunday
+                        </button>
+                      </form>
+                    </div>
                   </li>
                 ))}
               </ul>
